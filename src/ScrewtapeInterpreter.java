@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -108,8 +109,20 @@ public class ScrewtapeInterpreter {
   public Map<Integer, Integer> bracketMap(String program) {
     // TODO: Implement this
     // Hint: use a stack
+    Map<Integer, Integer> map = new HashMap<>();
     Stack<Integer> stack = new Stack<>();
-    return null;
+
+    for (int i = 0; i < program.length(); i++) {
+      char c = program.charAt(i);
+
+      if (c == '[') {
+        stack.push(i);
+      } else if (c == ']') {
+        int openIndex = stack.pop();
+        map.put(i, openIndex);
+      }
+    }
+    return map;
   }
 
   /**
