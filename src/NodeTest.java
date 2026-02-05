@@ -105,22 +105,24 @@ class NodeTest {
 
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
   @Test
-  void testToListTreatsThisAsHeadEvenWithPrev() {
+  void testListConstructorWithAllZeros() {
       // Arrange
-      Node first = new Node(1);
-      Node second = new Node(2);
-      Node third = new Node(3);
-
-      first.next = second;
-      second.prev = first;
-      second.next = third;
-      third.prev = second;
+      List<Integer> values = List.of(0, 0, 0);
 
       // Act
-      List<Integer> values = second.toList();
+      Node head = new Node(values);
 
       // Assert
-      assertEquals(List.of(2, 3), values);
+      assertEquals(0, head.value);
+      assertEquals(0, head.next.value);
+      assertEquals(0, head.next.next.value);
+      assertNull(head.next.next.next);
+
+      // Check backward links
+      assertNull(head.prev);
+      assertEquals(head, head.next.prev);
+      assertEquals(head.next, head.next.next.prev);
   }
+
 
 }

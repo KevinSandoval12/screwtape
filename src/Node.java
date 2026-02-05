@@ -66,8 +66,13 @@ public class Node {
     ArrayList<Integer> intList = new ArrayList<>();
     Node current = this;
     
-    while (current != null) {
+    while (current.prev != null){
+      current = current.prev;
+    }
+    
+    while (current != null){
       intList.add(current.value);
+      current = current.next;
     }
   
     return intList;

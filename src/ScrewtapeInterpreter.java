@@ -146,6 +146,62 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    //String for output
+    String output = "";
+
+    Map<Integer, Integer> bracketMapIndex = bracketMap(program);
+
+    //for-int loop to read through string
+    for (int i = 0; i < program.length(); i++){
+      char currentChar = program.charAt(i);
+
+
+      //functionality for shifting to the right
+      if (currentChar == '>'){
+        if (tapePointer.next == null){
+          Node newNode = new Node(0);
+          tapePointer.next = newNode;
+          newNode.prev = tapePointer; 
+          tapePointer = tapePointer.next;
+        } else {
+          tapePointer = tapePointer.next;
+        }
+      }
+
+      //functionality for shifting to the left
+      if (currentChar == '<'){
+        if (tapePointer.prev == null){
+          Node newNode = new Node(0);
+          tapePointer.prev = newNode;
+          newNode.next = tapePointer; 
+          tapePointer = tapePointer.prev;
+        } else {
+          tapePointer = tapePointer.prev;
+        }
+      }
+
+      //functionality for increasing value
+      if (currentChar == '+'){
+        tapePointer.value = tapePointer.value + 1;
+      }
+
+      //functionality for decreasing value
+      if (currentChar == '-'){
+        tapePointer.value = tapePointer.value - 1;
+      }
+
+      if (currentChar == '.'){
+        char asciiVal = (char) tapePointer.value;
+        System.out.println(asciiVal);
+        output += String.valueOf(asciiVal);
+      }
+
+      if (currentChar == ']' && tapePointer.value != 0){
+        i = bracketMapIndex.get(i) - 1;
+      }
+    }
+
+
+    return output;
   }
 }
